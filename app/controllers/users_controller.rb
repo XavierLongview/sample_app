@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      UserMailer.account_activation(@user).deliver_now
+      @user.send_activation_email
       if @user.email.include? "gmail.com"
         flash[:info] = %Q[Check your #{view_context.link_to('email', "https://mail.google.com/")} to activate your account.]
       else
